@@ -14,9 +14,45 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDrag
         return collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
     }
     
-    var imageCollection = [Image]()
+    var imageGallery = Gallery(gallery: [Image]())
     var width = 300.0
 
+    @IBAction func save(_ sender: UIBarButtonItem) {
+        if let json = imageGallery.json {
+            if let url = try? FileManager.default.url(
+                for: .documentDirectory,
+                in: .userDomainMask,
+                appropriateFor: nil,
+                create: true
+                ).appendingPathComponent("Untitled.json") {
+                do {
+                    try json.write(to: url)
+                    print("saved successfully")
+                } catch let error {
+                    print("couldnt save \(error)")
+                }
+                
+            }
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let url = try? FileManager.default.url(
+            for: .documentDirectory,
+            in: .userDomainMask,
+            appropriateFor: nil,
+            create: true
+            ).appendingPathComponent("Untitled.json") {
+            if let jsonData = try? Data(contentsOf: url){
+                imageGallery = Gallery(json: jsonData)!
+            }
+            
+            
+        }
+    }
+    
     @IBAction func zoomGallery(_ sender: UIPinchGestureRecognizer) {
         let maxWidth = Double(collectionView!.frame.width) * 0.45
         let minWidth = Double(collectionView!.frame.width) * 0.1
@@ -68,7 +104,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDrag
     // MARK: UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: width, height: width/imageCollection[indexPath.item].ratio);
+        return CGSize(width: width, height: width/imageGallery.gallery[indexPath.item].ratio);
     }
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -79,19 +115,19 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDrag
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return imageCollection.count
+        return imageGallery.gallery.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath)
-        print("DQ \(imageCollection.count)")
+        print("DQ \(imageGallery.gallery.count)")
         
         if let imageCell = cell as? ImageCollectionViewCell {
-            print(imageCollection.count, imageCollection[indexPath.item].url)
-            imageCell.imageView.frame.size = CGSize(width: width, height: width/imageCollection[indexPath.item].ratio)
+            print(imageGallery.gallery.count, imageGallery.gallery[indexPath.item].url)
+            imageCell.imageView.frame.size = CGSize(width: width, height: width/imageGallery.gallery[indexPath.item].ratio)
 //            imageCell.loadingView.startAnimating()
             flowLayout?.invalidateLayout()
-            imageCell.imageView.imageURL = imageCollection[indexPath.item].url
+            imageCell.imageView.imageURL = imageGallery.gallery[indexPath.item].url
         }
     
         // Configure the cell
@@ -133,9 +169,9 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDrag
         for item in coordinator.items {
             if let sourceIndexPath = item.sourceIndexPath {
                 collectionView.performBatchUpdates({
-                    let imageInfo = imageCollection[sourceIndexPath.item]
-                    imageCollection.remove(at: sourceIndexPath.item)
-                    imageCollection.insert(imageInfo, at: destinationIndexPath.item)
+                    let imageInfo = imageGallery.gallery[sourceIndexPath.item]
+                    imageGallery.gallery.remove(at: sourceIndexPath.item)
+                    imageGallery.gallery.insert(imageInfo, at: destinationIndexPath.item)
                     collectionView.deleteItems(at: [sourceIndexPath])
                     collectionView.insertItems(at: [destinationIndexPath])
                 })
@@ -166,7 +202,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDrag
                             if imageURL != nil, aspectRatio != nil {
                                 print("NOTNIL")
                                 placeholderContext.commitInsertion(dataSourceUpdates: { insertionIndexPath in
-                                    self.imageCollection.insert(Image(imageUrl: imageURL!, aspectRatio: aspectRatio!), at: insertionIndexPath.item)
+                                    self.imageGallery.gallery.insert(Image(imageUrl: imageURL!, aspectRatio: aspectRatio!), at: insertionIndexPath.item)
                                 })
                             } else {
                                 print("NIL")
@@ -189,7 +225,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDrag
                     print("2")
                     if let vc = segue.destination as? ImageViewController {
                         print("3")
-                        vc.imageView.imageURL = imageCollection[indexPath.item].url
+                        vc.imageView.imageURL = imageGallery.gallery[indexPath.item].url
                     }
                 }
             }

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		C3288A54200230F200344944 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3288A53200230F200344944 /* ImageViewController.swift */; };
-		C32DC04A20014E3600984421 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32DC04920014E3600984421 /* TableViewController.swift */; };
 		C32DC04C20014E9200984421 /* GalleryViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32DC04B20014E9200984421 /* GalleryViewCell.swift */; };
 		C32DC0502001558300984421 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32DC04F2001558300984421 /* Image.swift */; };
 		C3312B311FFE579300ED581D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3312B301FFE579300ED581D /* AppDelegate.swift */; };
@@ -19,11 +18,11 @@
 		C3312B461FFE736800ED581D /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3312B451FFE736800ED581D /* Utilities.swift */; };
 		C3312B481FFE7B3F00ED581D /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3312B471FFE7B3F00ED581D /* ImageCollectionViewCell.swift */; };
 		C3312B4A1FFE7DA600ED581D /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3312B491FFE7DA600ED581D /* ImageView.swift */; };
+		C33A50A22003D48300C836D1 /* Gallery.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33A50A12003D48300C836D1 /* Gallery.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		C3288A53200230F200344944 /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
-		C32DC04920014E3600984421 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		C32DC04B20014E9200984421 /* GalleryViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewCell.swift; sourceTree = "<group>"; };
 		C32DC04F2001558300984421 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		C3312B2D1FFE579300ED581D /* ImageGallery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageGallery.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -36,6 +35,7 @@
 		C3312B451FFE736800ED581D /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		C3312B471FFE7B3F00ED581D /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		C3312B491FFE7DA600ED581D /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
+		C33A50A12003D48300C836D1 /* Gallery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gallery.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,10 +71,10 @@
 				C3312B341FFE579300ED581D /* Main.storyboard */,
 				C3288A53200230F200344944 /* ImageViewController.swift */,
 				C32DC04B20014E9200984421 /* GalleryViewCell.swift */,
-				C32DC04920014E3600984421 /* TableViewController.swift */,
 				C3312B431FFE647C00ED581D /* CollectionViewController.swift */,
 				C3312B471FFE7B3F00ED581D /* ImageCollectionViewCell.swift */,
 				C3312B491FFE7DA600ED581D /* ImageView.swift */,
+				C33A50A12003D48300C836D1 /* Gallery.swift */,
 				C32DC04F2001558300984421 /* Image.swift */,
 				C3312B3C1FFE579300ED581D /* Info.plist */,
 				C3312B451FFE736800ED581D /* Utilities.swift */,
@@ -168,9 +168,9 @@
 				C3312B4A1FFE7DA600ED581D /* ImageView.swift in Sources */,
 				C3288A54200230F200344944 /* ImageViewController.swift in Sources */,
 				C32DC0502001558300984421 /* Image.swift in Sources */,
-				C32DC04A20014E3600984421 /* TableViewController.swift in Sources */,
 				C3312B461FFE736800ED581D /* Utilities.swift in Sources */,
 				C3312B441FFE647C00ED581D /* CollectionViewController.swift in Sources */,
+				C33A50A22003D48300C836D1 /* Gallery.swift in Sources */,
 				C32DC04C20014E9200984421 /* GalleryViewCell.swift in Sources */,
 				C3312B481FFE7B3F00ED581D /* ImageCollectionViewCell.swift in Sources */,
 				C3312B311FFE579300ED581D /* AppDelegate.swift in Sources */,
