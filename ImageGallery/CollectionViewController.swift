@@ -17,39 +17,55 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDrag
     var imageGallery = Gallery(gallery: [Image]())
     var width = 300.0
 
-    @IBAction func save(_ sender: UIBarButtonItem) {
-        if let json = imageGallery.json {
-            if let url = try? FileManager.default.url(
-                for: .documentDirectory,
-                in: .userDomainMask,
-                appropriateFor: nil,
-                create: true
-                ).appendingPathComponent("Untitled.json") {
-                do {
-                    try json.write(to: url)
-                    print("saved successfully")
-                } catch let error {
-                    print("couldnt save \(error)")
-                }
-                
+    var document: ImageGalleryDocument?
+    
+    @IBAction func save(_ sender: UIBarButtonItem? = nil) {
+        document?.imageGallery = imageGallery
+        if document?.imageGallery != nil {
+            document?.updateChangeCount(.done)
+        }
+//        if let json = imageGallery.json {
+//            if let url = try? FileManager.default.url(
+//                for: .documentDirectory,
+//                in: .userDomainMask,
+//                appropriateFor: nil,
+//                create: true
+//                ).appendingPathComponent("Untitled.json") {
+//                do {
+//                    try json.write(to: url)
+//                    print("saved successfully")
+//                } catch let error {
+//                    print("couldnt save \(error)")
+//                }
+//
+//            }
+//        }
+    }
+    
+    @IBAction func close(_ sender: UIBarButtonItem) {
+        save()
+        if document?.imageGallery != nil {
+            if let firstImage = (self.collectionView!.cellForItem(at: IndexPath(item: 0, section: 0)) as? ImageCollectionViewCell)?.imageView.snapshot {
+                document?.thumbnail = firstImage
             }
+        }
+        dismiss(animated: true) {
+            self.document?.close()
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if let url = try? FileManager.default.url(
-            for: .documentDirectory,
-            in: .userDomainMask,
-            appropriateFor: nil,
-            create: true
-            ).appendingPathComponent("Untitled.json") {
-            if let jsonData = try? Data(contentsOf: url){
-                imageGallery = Gallery(json: jsonData)!
+        document?.open { success in
+            if success {
+                self.title = self.document?.localizedName
+                if self.document?.imageGallery != nil {
+                self.imageGallery = self.document!.imageGallery!
+                }
+                print("opening document \(self.imageGallery.gallery.count)")
+                self.collectionView?.reloadData()
             }
-            
-            
         }
     }
     
@@ -75,8 +91,6 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDrag
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -87,6 +101,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDrag
         self.collectionView!.delegate = self
         self.collectionView!.dragDelegate = self
         self.collectionView!.dropDelegate = self
+        self.collectionView!.dragInteractionEnabled = true
         // Do any additional setup after loading the view.
     }
 

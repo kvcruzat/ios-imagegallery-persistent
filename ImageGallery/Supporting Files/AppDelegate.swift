@@ -2,8 +2,8 @@
 //  AppDelegate.swift
 //  ImageGallery
 //
-//  Created by Khen Cruzat on 04/01/2018.
-//  Copyright © 2018 Khen Cruzat. All rights reserved.
+//  Created by Khen Cruzat on 08/01/2018.
+//  Copyright © 2018 kvcruzat. All rights reserved.
 //
 
 import UIKit
@@ -39,6 +39,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+
+    func application(_ app: UIApplication, open inputURL: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        // Ensure the URL is a file URL
+        guard inputURL.isFileURL else { return false }
+                
+        // Reveal / import the document at the URL
+        guard let documentBrowserViewController = window?.rootViewController as? DocumentBrowserViewController else { return false }
+
+        documentBrowserViewController.revealDocument(at: inputURL, importIfNeeded: true) { (revealedDocumentURL, error) in
+            if let error = error {
+                // Handle the error appropriately
+                print("Failed to reveal the document at URL \(inputURL) with error: '\(error)'")
+                return
+            }
+            
+            // Present the Document View Controller for the revealed URL
+            documentBrowserViewController.presentDocument(at: revealedDocumentURL!)
+        }
+
+        return true
     }
 
 
